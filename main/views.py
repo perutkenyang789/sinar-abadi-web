@@ -9,7 +9,7 @@ def show_main(request):
         'company' : 'Toko Sinar Abadi',
         'owner_name': 'Ida Made Revindra Dikta Mahendra',
         'owner_class': 'kelas PBP C',
-        'store_proucts': store_products
+        'store_products': store_products
     }
 
     return render(request, "main.html", context)

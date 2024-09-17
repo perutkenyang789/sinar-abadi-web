@@ -1,16 +1,39 @@
-<html lang="en">
-<head>
-    <title>Toko Sinar Abadi</title>
-</head>
-<body>
-    {% extends 'base.html' %}
-    {% block content %}
-        <h1>Selamat Datang di {{ company }}</h1>
-        <br>
-    </header>
-    <section>
-        <h4>Didirikan oleh {{ owner_name }} dari {{ owner_class }}</h4>
-    </section>
-    {% endblock content %}
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Selamat Datang di {{ company }}</h1>
+<br>
+
+<h4>Didirikan oleh {{ owner_name }} dari {{ owner_class }}</h4>
+<br>
+
+{% if not store_products %}
+<p>Belum ada data produk pada Toko Sinar Abadi.</p>
+{% else %}
+<table>
+    <tr>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Color</th>
+    </tr>
+
+    {% comment %}
+    {% endcomment %} 
+    {% for product in store_products %}
+    <tr>
+        <td>{{product.name}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.description}}</td>
+        <td>{{product.color}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+<br />
+
+<a href="{% url 'main:create_product' %}">
+    <button>Add New Product</button>
+</a>
+{% endblock content %}

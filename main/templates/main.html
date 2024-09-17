@@ -3,12 +3,14 @@
     <title>Toko Sinar Abadi</title>
 </head>
 <body>
-    <header>
+    {% extends 'base.html' %}
+    {% block content %}
         <h1>Selamat Datang di {{ company }}</h1>
         <br>
     </header>
     <section>
         <h4>Didirikan oleh {{ owner_name }} dari {{ owner_class }}</h4>
     </section>
+    {% endblock content %}
 </body>
 </html>

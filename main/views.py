@@ -12,9 +12,10 @@ from django.urls import reverse
 
 @login_required(login_url='/login')
 def show_main(request):
-    store_products = Product.objects.all()
+    store_products = Product.objects.filter(user=request.user)
 
     context = {
+        'name': request.user.username,
         'company' : 'Toko Sinar Abadi',
         'owner_name': 'Ida Made Revindra Dikta Mahendra',
         'owner_class': 'kelas PBP C',
@@ -28,7 +29,9 @@ def create_product(request):
     form = ProductForm(request.POST or None)
 
     if form.is_valid() and request.method == "POST":
-        form.save()
+        product = form.save(commit=False)
+        product.user = request.user
+        product.save()
         return redirect('main:show_main')
 
     context = {'form': form}

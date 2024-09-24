@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -7,6 +8,7 @@ from main.models import Product
 from django.http import HttpResponse
 from django.core import serializers
 
+@login_required(login_url='/login')
 def show_main(request):
     store_products = Product.objects.all()
 

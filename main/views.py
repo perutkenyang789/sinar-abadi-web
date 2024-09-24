@@ -1,3 +1,5 @@
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from main.forms import ProductForm
 from main.models import Product
@@ -41,3 +43,15 @@ def show_xml_by_id(request, id):
 def show_json_by_id(request, id):
     data = Product.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def create_account(request):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Anda berhasil terdaftar sebagai pengguna baru. Selamat datang di Toko Sinar Abadi.')
+            return redirect('main:login')
+    context = {'form':form}
+    return render(request, 'register.html', context)

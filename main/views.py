@@ -61,9 +61,9 @@ def create_account(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Anda berhasil terdaftar sebagai pengguna baru. Selamat datang di Toko Sinar Abadi.')
-            return redirect('main:login')
+            return redirect('main:user_login')
     context = {'form':form}
-    return render(request, 'register.html', context)
+    return render(request, 'new_account.html', context)
 
 def user_login(request):
     if request.method == 'POST':
@@ -83,6 +83,6 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    response = HttpResponseRedirect(reverse('main:login'))
+    response = HttpResponseRedirect(reverse('main:user_login'))
     response.delete_cookie('last_login')
     return response

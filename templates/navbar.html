@@ -19,7 +19,7 @@
 
             <!-- Desktop Menu -->
             <div class="hidden md:flex space-x-4">
-                <a href="..." class="text-white hover:text-gray-200 font-bold py-2 px-4 rounded transition duration-300">Add Product</a>
+                <a href="{% url 'main:create_product' %}" class="text-white hover:text-gray-200 font-bold py-2 px-4 rounded transition duration-300">Add Product</a>
                 <a href="{% url 'main:user_logout' %}" class="text-white bg-red-500 hover:bg-red-600 py-2 px-4 rounded transition duration-300">Logout</a>
             </div>
         </div>
@@ -38,15 +38,15 @@
             </div>
 
             <ul class="space-y-2">
-                <li><a href="..." class="block text-white hover:text-gray-200 font-bold py-2 px-4 rounded transition duration-300">Home</a></li>
                 <li><a href="..." class="block text-white hover:text-gray-200 font-bold py-2 px-4 rounded transition duration-300">Add Product</a></li>
+                <li>
+                    <div class="mt-4" id="mobile-menu-bottom">
+                        <a href="{% url 'main:user_logout' %}" class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 mb-2">
+                            Logout
+                        </a>
+                    </div>
+                </li>
             </ul>
-
-            <div class="mt-4" id="mobile-menu-bottom">
-                <a href="{% url 'main:user_logout' %}" class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 mb-2">
-                    Logout
-                </a>
-            </div>
         </div>
     </div>
 

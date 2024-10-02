@@ -20,7 +20,7 @@ def show_main(request):
         'owner_name': 'Ida Made Revindra Dikta Mahendra',
         'owner_class': 'kelas PBP C',
         'store_products': store_products,
-        'last_login': request.COOKIES['last_login'],
+        'last_login': request.COOKIES.get('last_login', 'Have not logged in before'),
     }
 
     return render(request, "main.html", context)

@@ -66,15 +66,23 @@
 </div>
 
 <script>
-    function addProduct() {
-        fetch("{% url 'main:add_product_ajax' %}", {
-            method: "POST",
-            body: new FormData(document.querySelector('#productForm')),
-        })
-        .then(response => refreshProducts())
+    function createProduct() {
+        const formData = new FormData(document.querySelector('#productEntryForm'));
+        formData.append('csrfmiddlewaretoken', getCSRFToken());
 
-        document.getElementById("productForm").reset(); 
-        document.querySelector("[data-modal-toggle='crudModal']").click();
+        fetch("{% url 'main:create_product_ajax' %}", {
+            method: "POST",
+            body: formData,
+        })
+        .then(response => {
+            if (response.ok) {
+                refreshProducts();
+                document.getElementById("productEntryForm").reset(); 
+                hideModal();
+            } else {
+                response.json().then(data => console.error('Error:', data));
+            }
+        });
 
         return false;
     }
@@ -176,9 +184,17 @@
     document.getElementById("cancelButton").addEventListener("click", hideModal);
     document.getElementById("closeModalBtn").addEventListener("click", hideModal);
 
-    document.getElementById("productForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    addProduct();
-    })
+    // Add event listener to show modal button
+    document.getElementById("showModalBtn").addEventListener("click", showModal);
+
+    function getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
+
+    document.getElementById("productEntryForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        createProduct();
+    });
+
 </script>
 {% endblock content %}

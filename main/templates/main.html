@@ -65,6 +65,27 @@
 </div>
 
 <script>
+    function createProduct() {
+        const formData = new FormData(document.querySelector('#productEntryForm'));
+        formData.append('csrfmiddlewaretoken', getCSRFToken());
+
+        fetch("{% url 'main:create_product_ajax' %}", {
+            method: "POST",
+            body: formData,
+        })
+        .then(response => {
+            if (response.ok) {
+                refreshProducts();
+                document.getElementById("productEntryForm").reset(); 
+                hideModal();
+            } else {
+                response.json().then(data => console.error('Error:', data));
+            }
+        });
+
+        return false;
+    }
+
     async function getProducts(){
         return fetch("{% url 'main:show_json' %}").then((res) => res.json())
     }
@@ -80,7 +101,7 @@
         if (store_products.length === 0){
             classNameString = "flex flex-col items-center justify-center p-6";
             htmlString = `
-                <p class="text-center text-gray-600 mt-4">There is no product data in Toko SInar Abadi.</p>
+                <p class="text-center text-gray-600 mt-4">There is no product data in Toko Sinar Abadi.</p>
             `;
         }
 
@@ -171,27 +192,6 @@
 
     function getCSRFToken() {
         return document.querySelector('[name=csrfmiddlewaretoken]').value;
-    }
-
-    function createProduct() {
-        const formData = new FormData(document.querySelector('#productEntryForm'));
-        formData.append('csrfmiddlewaretoken', getCSRFToken());
-
-        fetch("{% url 'main:create_product_ajax' %}", {
-            method: "POST",
-            body: formData,
-        })
-        .then(response => {
-            if (response.ok) {
-                refreshProducts();
-                document.getElementById("productEntryForm").reset(); 
-                hideModal();
-            } else {
-                response.json().then(data => console.error('Error:', data));
-            }
-        });
-
-        return false;
     }
 
     document.getElementById("productEntryForm").addEventListener("submit", function(e) {

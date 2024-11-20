@@ -70,7 +70,7 @@
         const formData = new FormData(document.querySelector('#productEntryForm'));
         formData.append('csrfmiddlewaretoken', getCSRFToken());
 
-        fetch("{% url 'main:create_product_ajax' %}", {
+        fetch("{% url 'main:add_product_ajax' %}", {
             method: "POST",
             body: formData,
         })
